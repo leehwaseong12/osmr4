@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>수시 위험성 평가</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* 날짜 입력 필드 가독성 개선 */
+        input[type="date"] {
+            color: #333;
+            background-color: #fff;
+            font-size: 14px;
+            padding: 4px;
+            border: 1px solid #007bff;
+            border-radius: 3px;
+        }
+
+        /* 빈도, 강도 선택 기본값 설정 */
+        select {
+            font-size: 14px;
+            padding: 4px;
+            border: 1px solid #007bff;
+            border-radius: 3px;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* 🔹 버튼 컨테이너 스타일 */
+        .button-container {
+            display: flex;
+            justify-content: center; /* 가운데 정렬 */
+            gap: 20px; /* 버튼 사이 간격 */
+            margin-top: 10px;
+        }
+
+        .button {
+            padding: 6px 14px; /* 버튼 크기 적절히 조정 */
+            font-size: 14px; /* 글자 크기 줄임 */
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            width: 120px; /* 버튼 크기 동일하게 맞춤 */
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .submit-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>수시 위험성 평가 (5×4 빈도-강도법)</h1>
+    </header>
+
+    <section>
+        <form id="riskForm">
+            <input type="hidden" name="evaluation_type" value="수시">  <!-- 수시 평가 구분 -->
+
+            <div class="field">
+                <label for="date">📅 작성 날짜</label>
+                <input type="date" name="date" id="date" required>
+            </div>
+
+            <div class="field">
+                <label for="location">📍 현장 위치</label>
+                <input type="text" name="location" id="location" placeholder="예: P3 Line 2F C121 Ba" required>
+            </div>
+
+            <div class="field">
+                <label for="task">🔹 작업명</label>
+                <input type="text" name="task" id="task" required>
+            </div>
+
+            <div class="field">
+                <label for="hazard">⚠️ 위험요인</label>
+                <input type="text" name="hazard" id="hazard" required>
+            </div>
+
+            <div class="field">
+                <label for="frequency">📌 빈도</label>
+                <select name="frequency" id="frequency" required>
+                    <option value="" disabled selected>-- 선택 --</option>
+                    <option value="5">5 - 매우 높음</option>
+                    <option value="4">4 - 높음</option>
+                    <option value="3">3 - 보통</option>
+                    <option value="2">2 - 낮음</option>
+                    <option value="1">1 - 매우 낮음</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="severity">⚡ 강도</label>
+                <select name="severity" id="severity" required>
+                    <option value="" disabled selected>-- 선택 --</option>
+                    <option value="4">4 - 사망</option>
+                    <option value="3">3 - 장해발생</option>
+                    <option value="2">2 - 병원치료</option>
+                    <option value="1">1 - 비치료</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="risk_level">🚦 중대성 (자동 계산)</label>
+                <input type="text" id="risk_level" name="risk_level" readonly>
+            </div>
+
+            <div class="field">
+                <label for="control_measures">✅ 예방 대책</label>
+                <textarea name="control_measures" id="control_measures" rows="3" required></textarea>
+            </div>
+
+            <h3>🔽 감소 후 위험성 평가</h3>
+
+            <div class="field">
+                <label for="reduced_frequency">📌 감소 후 빈도</label>
+                <select name="reduced_frequency" id="reduced_frequency" required>
+                    <option value="" disabled selected>-- 선택 --</option>
+                    <option value="5">5 - 매우 높음</option>
+                    <option value="4">4 - 높음</option>
+                    <option value="3">3 - 보통</option>
+                    <option value="2">2 - 낮음</option>
+                    <option value="1">1 - 매우 낮음</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="reduced_severity">⚡ 감소 후 강도</label>
+                <select name="reduced_severity" id="reduced_severity" required>
+                    <option value="" disabled selected>-- 선택 --</option>
+                    <option value="4">4 - 사망</option>
+                    <option value="3">3 - 장해발생</option>
+                    <option value="2">2 - 병원치료</option>
+                    <option value="1">1 - 비치료</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="reduced_risk_level">🚦 감소 후 중대성 (자동 계산)</label>
+                <input type="text" id="reduced_risk_level" name="reduced_risk_level" readonly>
+            </div>
+
+            <!-- 🔹 버튼 컨테이너 (가운데 정렬) -->
+            <div class="button-container">
+                <button type="button" class="button back-button" onclick="history.back()">뒤로 가기</button>
+                <button type="submit" class="button submit-button">제출</button>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var today = new Date().toISOString().split('T')[0]; 
+            document.getElementById("date").value = today;
+        });
+
+        // 중대성 자동 계산
+        function calculateRisk() {
+            let frequency = parseInt(document.getElementById("frequency").value) || 0;
+            let severity = parseInt(document.getElementById("severity").value) || 0;
+            let risk = frequency * severity;
+            document.getElementById("risk_level").value = risk ? risk : "";
+        }
+
+        function calculateReducedRisk() {
+            let reducedFrequency = parseInt(document.getElementById("reduced_frequency").value) || 0;
+            let reducedSeverity = parseInt(document.getElementById("reduced_severity").value) || 0;
+            let reducedRisk = reducedFrequency * reducedSeverity;
+            document.getElementById("reduced_risk_level").value = reducedRisk ? reducedRisk : "";
+        }
+
+        document.getElementById("frequency").addEventListener("change", calculateRisk);
+        document.getElementById("severity").addEventListener("change", calculateRisk);
+        document.getElementById("reduced_frequency").addEventListener("change", calculateReducedRisk);
+        document.getElementById("reduced_severity").addEventListener("change", calculateReducedRisk);
+
+        document.getElementById("riskForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            alert("제출되었습니다.");
+            document.getElementById("riskForm").reset();
+            document.getElementById("date").value = new Date().toISOString().split('T')[0]; 
+        });
+    </script>
+
+</body>
+</html>

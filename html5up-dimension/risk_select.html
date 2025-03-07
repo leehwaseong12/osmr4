@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>위험성 평가 선택</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        /* 전체 페이지 스타일 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            flex-direction: column;
+            margin: 0;
+            background-color: #dfe6e9;
+            color: #222; /* 전체 글씨 검은색 */
+            position: relative; /* 🔹 뒤로가기 버튼 위치 조정 */
+        }
+
+        header h1, header p {
+            color: black; /* 제목과 설명 글씨 검은색 */
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px; /* 버튼 간격 줄이기 */
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 160px; /* 버튼 크기 줄임 */
+            height: 40px; /* 버튼 크기 줄임 */
+            font-size: 14px; /* 글자 크기 줄임 */
+            border-radius: 5px;
+            text-decoration: none;
+            color: black; /* 버튼 내부 글씨 검은색 */
+            font-weight: bold;
+            transition: 0.3s;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            border: 2px solid transparent; /* 기본 테두리 설정 */
+        }
+
+        /* 버튼 스타일 */
+        .button.primary { background-color: #28a745; color: white; border-color: #1e7e34; }
+        .button.primary:hover { background-color: #1e7e34; }
+
+        .button { background-color: #007bff; color: white; border-color: #0056b3; }
+        .button:hover { background-color: #0056b3; }
+
+        .button.secondary { background-color: #ffcc00; color: black; border-color: #d4a700; }
+        .button.secondary:hover { background-color: #d4a700; }
+
+        /* 🔹 뒤로가기 버튼 스타일 */
+        .back-button {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            color: black !important; /* 🔥 글씨 색 완전 검은색 */
+            border: 2px solid #6c757d;
+            font-size: 14px; /* 🔥 버튼 크기 최소화 */
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80px; /* 버튼 크기 */
+            font-weight: bold; /* 🔥 글씨 굵게 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button:hover {
+            background-color: #f0f0f0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>위험성 평가 선택</h1>
+        <p>진행할 위험성 평가 유형을 선택하세요.</p>
+    </header>
+
+    <section class="button-container">
+        <a href="risk_assessment_regular.html" class="button primary">정기 평가</a>
+        <a href="risk_assessment_special.html" class="button">수시 평가</a>
+        <a href="password_prompt.html" class="button secondary">평가기록 조회</a>
+    </section>
+
+    <!-- 🔹 뒤로가기 버튼 -->
+    <button class="back-button" onclick="history.back()">뒤로</button>
+
+</body>
+</html>
